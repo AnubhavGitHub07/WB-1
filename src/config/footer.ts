@@ -13,7 +13,6 @@ export const footerConfig = {
       items: [
         { title: "木心について", href: "/about" },
         { title: "お問い合わせ", href: "/contact" },
-        { title: "採用情報", href: "#" },
       ],
     },
     {

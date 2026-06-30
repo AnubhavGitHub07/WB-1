@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "職人技",
@@ -20,8 +21,8 @@ export default function CraftsmanshipPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24">
           <div className="space-y-6">
-            <div className="aspect-square overflow-hidden mb-8">
-              <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1000" alt="木材の選定" className="w-full h-full object-cover"/>
+            <div className="relative aspect-square overflow-hidden mb-8">
+              <Image src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1000" alt="木材の選定" fill className="object-cover"/>
             </div>
             <h2 className="font-serif text-3xl">1. 選定と休息</h2>
             <p className="text-muted-foreground font-light leading-relaxed">
@@ -30,8 +31,8 @@ export default function CraftsmanshipPage() {
           </div>
 
           <div className="space-y-6 md:mt-32">
-            <div className="aspect-[4/5] overflow-hidden mb-8">
-              <img src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&q=80&w=1000" alt="伝統的な木組み" className="w-full h-full object-cover"/>
+            <div className="relative aspect-[4/5] overflow-hidden mb-8">
+              <Image src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&q=80&w=1000" alt="伝統的な木組み" fill className="object-cover"/>
             </div>
             <h2 className="font-serif text-3xl">2. 木組み</h2>
             <p className="text-muted-foreground font-light leading-relaxed">
@@ -40,8 +41,8 @@ export default function CraftsmanshipPage() {
           </div>
 
           <div className="space-y-6">
-            <div className="aspect-[3/4] overflow-hidden mb-8">
-              <img src="https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&q=80&w=1000" alt="手作業による仕上げ" className="w-full h-full object-cover"/>
+            <div className="relative aspect-[3/4] overflow-hidden mb-8">
+              <Image src="https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&q=80&w=1000" alt="手作業による仕上げ" fill className="object-cover"/>
             </div>
             <h2 className="font-serif text-3xl">3. 天然仕上げ</h2>
             <p className="text-muted-foreground font-light leading-relaxed">

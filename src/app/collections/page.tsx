@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "コレクション",
@@ -44,12 +45,12 @@ export default function CollectionsPage() {
           {collections.map((collection, index) => (
             <div key={collection.name} className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div className={`order-2 ${index % 2 === 0 ? "lg:order-1" : "lg:order-2"}`}>
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
                     src={collection.image}
                     alt={collection.name}
-                    className="w-full h-full object-cover grayscale-[10%]"
-                    loading="lazy"
+                    fill
+                    className="object-cover grayscale-[10%]"
                   />
                 </div>
               </div>

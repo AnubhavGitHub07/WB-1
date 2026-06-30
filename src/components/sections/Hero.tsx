@@ -3,40 +3,58 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { companyConfig } from "@/config/company";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const imageWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Intro Animation
-      gsap.fromTo(
-        ".hero-text-line",
-        { y: 100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.5, stagger: 0.2, ease: "power4.out", delay: 0.2 }
-      );
+      const mm = gsap.matchMedia();
 
-      gsap.fromTo(
-        imageRef.current,
-        { scale: 1.1, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 2, ease: "power3.out" }
-      );
+      mm.add("(min-width: 768px)", () => {
+        // Desktop Animation
+        gsap.fromTo(
+          ".hero-text-line",
+          { y: 100, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.5, stagger: 0.2, ease: "power4.out", delay: 0.2 }
+        );
 
-      // Parallax Scroll
-      gsap.to(imageRef.current, {
-        yPercent: 30,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
+        gsap.fromTo(
+          imageWrapperRef.current,
+          { scale: 1.1, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 2, ease: "power3.out" }
+        );
+
+        // Parallax Scroll
+        gsap.to(imageWrapperRef.current, {
+          yPercent: 30,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
+
+      mm.add("(max-width: 767px)", () => {
+        // Mobile Animation (Simplified, no parallax)
+        gsap.fromTo(
+          ".hero-text-line",
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power2.out", delay: 0.1 }
+        );
+        gsap.fromTo(
+          imageWrapperRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 1.5, ease: "power2.out" }
+        );
       });
     }, heroRef);
 
@@ -47,13 +65,17 @@ export default function Hero() {
     <section ref={heroRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-black/20 z-10" />
-        <img
-          ref={imageRef}
-          src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=2000"
-          alt="Luxury Japanese Interior"
-          className="w-full h-full object-cover"
-        />
+        <div ref={imageWrapperRef} className="absolute inset-0 w-full h-full">
+          <Image
+            src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=2000"
+            alt="Luxury Japanese Interior"
+            fill
+            priority
+            className="object-cover"
+          />
+        </div>
+        {/* Overlay with top gradient for Navbar contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/20 z-10 pointer-events-none" />
       </div>
 
       {/* Content */}

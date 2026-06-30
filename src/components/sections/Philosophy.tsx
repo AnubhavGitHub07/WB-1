@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { contentConfig } from "@/config/content";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,21 +13,42 @@ export default function Philosophy() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".philosophy-reveal",
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
-        }
-      );
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        gsap.fromTo(
+          ".philosophy-reveal",
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 75%",
+            },
+          }
+        );
+      });
+
+      mm.add("(max-width: 767px)", () => {
+        gsap.fromTo(
+          ".philosophy-reveal",
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 85%",
+            },
+          }
+        );
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -56,10 +78,11 @@ export default function Philosophy() {
           {/* Right: Image */}
           <div className="lg:col-span-5 philosophy-reveal">
             <div className="relative aspect-[4/5] overflow-hidden">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&q=80&w=1200"
                 alt="Craftsmanship Process"
-                className="w-full h-full object-cover grayscale-[20%]"
+                fill
+                className="object-cover grayscale-[20%]"
               />
             </div>
           </div>

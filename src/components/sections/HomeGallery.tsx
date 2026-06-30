@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,22 +31,43 @@ export default function HomeGallery() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const items = gsap.utils.toArray<HTMLElement>(".gallery-item");
-      
-      items.forEach((item, i) => {
-        gsap.fromTo(
-          item,
-          { y: 100, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1.5,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 85%",
-            },
-          }
-        );
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        items.forEach((item) => {
+          gsap.fromTo(
+            item,
+            { y: 100, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1.5,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: item,
+                start: "top 85%",
+              },
+            }
+          );
+        });
+      });
+
+      mm.add("(max-width: 767px)", () => {
+        items.forEach((item) => {
+          gsap.fromTo(
+            item,
+            { opacity: 0 },
+            {
+              opacity: 1,
+              duration: 1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: item,
+                start: "top 90%",
+              },
+            }
+          );
+        });
       });
     }, galleryRef);
 
@@ -61,15 +83,15 @@ export default function HomeGallery() {
           {images.map((img, index) => (
             <div
               key={index}
-              className={`gallery-item w-full overflow-hidden ${img.aspect} ${
+              className={`gallery-item relative w-full overflow-hidden ${img.aspect} ${
                 index === 1 ? "md:translate-y-24" : ""
               }`}
             >
-              <img
+              <Image
                 src={img.src}
                 alt={img.alt}
-                className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
-                loading="lazy"
+                fill
+                className="object-cover transition-transform duration-1000 hover:scale-105"
               />
             </div>
           ))}

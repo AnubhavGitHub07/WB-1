@@ -22,19 +22,7 @@ export default function Footer() {
             <p className="text-primary-foreground/70 text-sm leading-relaxed max-w-xs">
               {companyConfig.tagline}
             </p>
-            <div className="flex space-x-4">
-              {siteConfig.links.instagram && (
-                <a
-                  href={siteConfig.links.instagram}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-10 h-10 rounded-full border border-primary-foreground/20 flex items-center justify-center hover:bg-primary-foreground hover:text-primary transition-colors duration-300 font-sans text-xs tracking-widest"
-                  aria-label="Instagram"
-                >
-                  IG
-                </a>
-              )}
-            </div>
+
           </div>
 
           {/* Links */}

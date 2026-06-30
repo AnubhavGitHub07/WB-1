@@ -13,6 +13,9 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  
+  const isHome = pathname === "/";
+  const isDarkBackground = isHome && !isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,10 +25,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
+
 
   return (
     <header
@@ -37,7 +37,7 @@ export default function Navbar() {
       )}
     >
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
-        <Link href="/" className="relative z-50">
+        <Link href="/" className={cn("relative z-50 transition-colors duration-300", isDarkBackground ? "text-white" : "text-foreground")}>
           <span className="font-serif text-2xl tracking-widest">
             {companyConfig.name}
           </span>
@@ -51,15 +51,16 @@ export default function Navbar() {
               href={item.href}
               className={cn(
                 "text-sm tracking-widest uppercase transition-colors duration-300 relative group",
-                pathname === item.href
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                isDarkBackground 
+                  ? (pathname === item.href ? "text-white" : "text-white/70 hover:text-white")
+                  : (pathname === item.href ? "text-foreground" : "text-muted-foreground hover:text-foreground")
               )}
             >
               {item.title}
               <span
                 className={cn(
-                  "absolute -bottom-1 left-0 w-full h-[1px] bg-foreground transform origin-left transition-transform duration-300",
+                  "absolute -bottom-1 left-0 w-full h-[1px] transform origin-left transition-transform duration-300",
+                  isDarkBackground ? "bg-white" : "bg-foreground",
                   pathname === item.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                 )}
               />
@@ -69,7 +70,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden relative z-50 p-2 -mr-2 text-foreground"
+          className={cn("md:hidden relative z-50 p-2 -mr-2 transition-colors duration-300", isDarkBackground ? "text-white" : "text-foreground")}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle Menu"
         >
@@ -97,6 +98,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
                     className={cn(
                       "font-serif text-3xl tracking-widest uppercase",
                       pathname === item.href

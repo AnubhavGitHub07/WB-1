@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "木心について",
@@ -14,8 +15,8 @@ export default function AboutPage() {
             <h1 className="font-serif text-5xl md:text-6xl mb-8 leading-tight">
               森を <br /> 敬う。
             </h1>
-            <div className="aspect-[3/4] overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&q=80&w=1200" alt="木心の工房" className="w-full h-full object-cover grayscale-[30%]" />
+            <div className="relative aspect-[3/4] overflow-hidden">
+              <Image src="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&q=80&w=1200" alt="木心の工房" fill className="object-cover grayscale-[30%]" />
             </div>
           </div>
           

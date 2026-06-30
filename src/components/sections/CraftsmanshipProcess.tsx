@@ -1,4 +1,5 @@
 import { contentConfig } from "@/config/content";
+import Image from "next/image";
 
 const processSteps = [
   {
@@ -41,12 +42,12 @@ export default function CraftsmanshipProcess() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {processSteps.map((step, index) => (
             <div key={index} className="flex flex-col">
-              <div className="aspect-[4/5] overflow-hidden mb-6 rounded-sm">
-                <img
+              <div className="relative aspect-[4/5] overflow-hidden mb-6 rounded-sm">
+                <Image
                   src={step.image}
                   alt={step.title}
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  loading="lazy"
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-105"
                 />
               </div>
               <h3 className="font-serif text-2xl mb-3 flex items-center">

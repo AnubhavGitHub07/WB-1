@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "ジャーナル",
@@ -42,8 +43,8 @@ export default function JournalPage() {
           {articles.map((article, index) => (
             <article key={index} className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               <div className="lg:col-span-7">
-                <div className="aspect-[16/9] overflow-hidden">
-                  <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+                <div className="relative aspect-[16/9] overflow-hidden">
+                  <Image src={article.image} alt={article.title} fill className="object-cover" />
                 </div>
               </div>
               <div className="lg:col-span-5 flex flex-col justify-center">
